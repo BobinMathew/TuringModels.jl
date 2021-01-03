@@ -23,15 +23,15 @@ StatsPlots.plot(chains)</code></pre>
   parameters      mean       std   naive_se      mcse        ess      rhat
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           α    0.0485    1.4449     0.0457    0.0889   422.1189    1.0026
-           σ    1.8379    1.6866     0.0533    0.1006   189.2968    1.0096
+           α   -0.0312    1.5305     0.0484    0.0982   169.3438    1.0103
+           σ    1.8834    1.5019     0.0475    0.1025   207.9346    0.9991
 </code></pre>
 <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-           α   -2.5237   -0.5906    0.0389    0.6516    3.4219
-           σ    0.6066    0.9790    1.3843    2.0224    6.3856
+           α   -3.3986   -0.6065   -0.0231    0.6264    3.0097
+           σ    0.5963    0.9826    1.4354    2.1558    6.2145
 </code></pre>
 <h2 id=original_output ><a href="#original_output">Original output</a></h2>
 <pre><code class="julia hljs">mean   sd  <span class=hljs-number >5.5</span>% <span class=hljs-number >94.5</span>% n_eff Rhat

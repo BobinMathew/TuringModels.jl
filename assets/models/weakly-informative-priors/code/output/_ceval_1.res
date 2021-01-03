@@ -2,5 +2,5 @@ Summary Statistics
   parameters      mean       std   naive_se      mcse        ess      rhat
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           α    0.0485    1.4449     0.0457    0.0889   422.1189    1.0026
-           σ    1.8379    1.6866     0.0533    0.1006   189.2968    1.0096
+           α   -0.0312    1.5305     0.0484    0.0982   169.3438    1.0103
+           σ    1.8834    1.5019     0.0475    0.1025   207.9346    0.9991
