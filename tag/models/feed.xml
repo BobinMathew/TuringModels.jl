@@ -1,0 +1,17 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>TuringModels</title>
+  <description><![CDATA[Statistical Rethinking models in Julia
+]]></description>
+  <link>https://rikhuijzer.github.io/TuringModels.jl/</link>
+  <atom:link href="https://rikhuijzer.github.io/TuringModels.jl/tag/models/feed.xml" rel="self" type="application/rss+xml" />
+  <item>
+    <title>Models</title>
+    <link>https://rikhuijzer.github.io/TuringModels.jl/models/</link>
+    <description><![CDATA[A list of the Turing versions of the Statistical Rethinking models.
+<br><a href="https://rikhuijzer.github.io/TuringModels.jl/models/">Read more</a>]]></description>
+    <guid>https://rikhuijzer.github.io/TuringModels.jl/models/</guid>
+    <pubDate>Sun, 3 Jan 2021 00:00:00 UT</pubDate>
+  </item>
+</channel>
+</rss>
