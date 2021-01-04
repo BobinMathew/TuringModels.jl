@@ -14,10 +14,10 @@ StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/model
   parameters      mean       std   naive_se      mcse        ess      rhat
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           θ    0.6380    0.1479     0.0047    0.0067   419.1924    1.0043
+           θ    0.6421    0.1392     0.0044    0.0053   463.7528    1.0029
 </code></pre> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-           θ    0.3191    0.5338    0.6468    0.7518    0.8868
-</code></pre> <h1 id=show_the_hpd_region ><a href="#show_the_hpd_region">Show the hpd region</a></h1> <p>hpd&#40;chns, alpha&#61;0.055&#41; |&gt; display</p> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 03, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+           θ    0.3478    0.5526    0.6548    0.7385    0.8833
+</code></pre> <h1 id=show_the_hpd_region ><a href="#show_the_hpd_region">Show the hpd region</a></h1> <p>hpd&#40;chns, alpha&#61;0.055&#41; |&gt; display</p> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->

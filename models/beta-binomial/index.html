@@ -22,14 +22,20 @@ df = CSV.read(data_path, DataFrame; delim=<span class=hljs-string >&#x27;;&#x27;
 <span class=hljs-keyword >end</span>
 
 model = m11_5(df.admit, df.applications)
-chains = sample(model, NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre> <pre><code class="plaintext hljs">ArgumentError: Package StatsFuns not found in current path:
-- Run `import Pkg; Pkg.add(&quot;StatsFuns&quot;)` to install the StatsFuns package.
+chains = sample(model, NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
-</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/beta-binomial/code/output/chains.svg" alt=""></p> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">Summary Statistics
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-StatsPlots.plot(chains)</code></pre> <p><pre><code class="plaintext hljs">UndefVarError: chains not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/models/beta-binomial/code/chains.svg' not found. //</span></p></p> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">UndefVarError: chains not defined
-</code></pre> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">UndefVarError: chains not defined
+           α   -0.3865    0.3092     0.0098    0.0100   728.1274    0.9991
+           θ    2.7958    0.9319     0.0295    0.0436   764.3695    0.9990
+</code></pre> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           α   -1.0219   -0.5860   -0.3913   -0.1952    0.2725
+           θ    1.2693    2.1580    2.7034    3.3511    4.7882
 </code></pre> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">mean   sd  <span class=hljs-number >5.5</span>% <span class=hljs-number >94.5</span>% n_eff Rhat
 theta   <span class=hljs-number >2.74</span> <span class=hljs-number >0.96</span>  <span class=hljs-number >1.43</span>  <span class=hljs-number >4.37</span>  <span class=hljs-number >3583</span>    <span class=hljs-number >1</span>
-a       -<span class=hljs-number >0.37</span> <span class=hljs-number >0.31</span> -<span class=hljs-number >0.87</span>  <span class=hljs-number >0.12</span>  <span class=hljs-number >3210</span>    <span class=hljs-number >1</span></code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 03, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+a       -<span class=hljs-number >0.37</span> <span class=hljs-number >0.31</span> -<span class=hljs-number >0.87</span>  <span class=hljs-number >0.12</span>  <span class=hljs-number >3210</span>    <span class=hljs-number >1</span></code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
