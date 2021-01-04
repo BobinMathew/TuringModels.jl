@@ -30,12 +30,10 @@ df = select(df, :log_gdp, :rugged, :cont_africa)</code></pre> <pre><code class="
 model = model_fn(df.log_gdp, df.rugged, df.cont_africa)
 chains = sample(model, NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre> <pre><code class="plaintext hljs">LoadError: UndefVarError: @model not defined
 in expression starting at none:1
-</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+</code></pre> <h2 id=output ><a href="#output">Output</a></h2> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p><pre><code class="plaintext hljs">UndefVarError: chains not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/models/africa/code/chains.svg' not found. //</span></p></p> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">UndefVarError: chains not defined
-</code></pre> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">UndefVarError: chains not defined
-</code></pre> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">Iterations = <span class=hljs-number >1</span>:<span class=hljs-number >1000</span>
+</code></pre> <p><span style="color:red;">// Image matching '/assets/models/africa/code/chains.svg' not found. //</span></p> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">Iterations = <span class=hljs-number >1</span>:<span class=hljs-number >1000</span>
 Thinning interval = <span class=hljs-number >1</span>
 Chains = <span class=hljs-number >1</span>,<span class=hljs-number >2</span>,<span class=hljs-number >3</span>,<span class=hljs-number >4</span>
 Samples per chain = <span class=hljs-number >1000</span>

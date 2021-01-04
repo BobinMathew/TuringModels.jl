@@ -11,25 +11,12 @@
   y ~ Normal(m, sqrt(s))
 <span class=hljs-keyword >end</span></code></pre> <p>and run the sampler:</p> <pre><code class="julia hljs">chains = sample(gdemo(<span class=hljs-number >1.5</span>, <span class=hljs-number >2</span>), NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre>
 <h2 id=output ><a href="#output">Output</a></h2>
-<p>The results are</p>
+</p>
 
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
-<pre><code class="julia hljs">StatsPlots.plot(chains)</code></pre>
-<p> <img src="/TuringModels.jl/assets/models/basic-example/code/output/height.svg" alt=""></p>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">Summary Statistics
-  parameters      mean       std   naive_se      mcse        ess      rhat
-      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
-
-           m    1.1859    0.7377     0.0233    0.0318   512.3192    0.9991
-           s    1.8539    1.3549     0.0428    0.0654   590.1373    0.9991
-</code></pre>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
-  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
-      Symbol   Float64   Float64   Float64   Float64   Float64
-
-           m   -0.2228    0.7404    1.1551    1.6447    2.6585
-           s    0.5629    1.0134    1.5504    2.2033    5.2920
-</code></pre>
+StatsPlots.plot(chains)</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/basic-example/code/output/chains.svg" alt="">
 <div class=page-foot >
   <div class=copyright >
     <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors.

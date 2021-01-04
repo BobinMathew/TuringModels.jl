@@ -13,26 +13,12 @@
 chains = sample(m8_3(y), NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>);</code></pre>
 
 <h2 id=output ><a href="#output">Output</a></h2>
-
+</p>
 
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre>
-<p> <img src="/TuringModels.jl/assets/models/weakly-informative-priors/code/output/chains.svg" alt=""></p>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">Summary Statistics
-  parameters      mean       std   naive_se      mcse        ess      rhat
-      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
-
-           α    0.0752    1.6375     0.0518    0.0872   210.8113    1.0028
-           σ    2.0921    1.8301     0.0579    0.1215   204.5258    1.0125
-</code></pre>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
-  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
-      Symbol   Float64   Float64   Float64   Float64   Float64
-
-           α   -2.9798   -0.6913    0.0277    0.7874    3.7668
-           σ    0.5832    1.0743    1.5411    2.4332    7.2054
-</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/weakly-informative-priors/code/output/chains.svg" alt="">
 <h2 id=original_output ><a href="#original_output">Original output</a></h2>
 <pre><code class="julia hljs">mean   sd  <span class=hljs-number >5.5</span>% <span class=hljs-number >94.5</span>% n_eff Rhat
 alpha <span class=hljs-number >0.09</span> <span class=hljs-number >1.63</span> -<span class=hljs-number >2.13</span>  <span class=hljs-number >2.39</span>   <span class=hljs-number >959</span>    <span class=hljs-number >1</span>

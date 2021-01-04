@@ -15,22 +15,10 @@ y = rand(Normal(<span class=hljs-number >0</span>,<span class=hljs-number >1</sp
 <span class=hljs-keyword >end</span>
 
 chains = sample(m8_4(y), NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >2000</span>)</code></pre> <pre><code class="plaintext hljs">UndefVarError: y not defined
-</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+</code></pre> <h2 id=output ><a href="#output">Output</a></h2> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p><pre><code class="plaintext hljs">chains is not a Function, or is not defined at any of the values [-5.0, -1.0, 0.0, 0.01]
-</code></pre> <p><span style="color:red;">// Image matching '/assets/models/non-identifiable/code/chains.svg' not found. //</span></p></p> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">MethodError: no method matching describe(::IOStream, ::typeof(MCMCChains.chains))
-Closest candidates are:
-  describe(::IO, !Matched::AbstractArray{T,N} where N) where T&lt;:Union{Missing, Real} at /home/runner/.julia/packages/StatsBase/EA8Mh/src/scalarstats.jl:652
-  describe(::IO, !Matched::AbstractArray) at /home/runner/.julia/packages/StatsBase/EA8Mh/src/scalarstats.jl:656
-  describe(::IO, !Matched::MCMCChains.Chains; q, etype, kwargs...) at /home/runner/.julia/packages/MCMCChains/ic1pq/src/stats.jl:161
-  ...
-</code></pre> <pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">MethodError: no method matching describe(::IOStream, ::typeof(MCMCChains.chains))
-Closest candidates are:
-  describe(::IO, !Matched::AbstractArray{T,N} where N) where T&lt;:Union{Missing, Real} at /home/runner/.julia/packages/StatsBase/EA8Mh/src/scalarstats.jl:652
-  describe(::IO, !Matched::AbstractArray) at /home/runner/.julia/packages/StatsBase/EA8Mh/src/scalarstats.jl:656
-  describe(::IO, !Matched::MCMCChains.Chains; q, etype, kwargs...) at /home/runner/.julia/packages/MCMCChains/ic1pq/src/stats.jl:161
-  ...
-</code></pre> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">mean      sd     <span class=hljs-number >5.5</span>%   <span class=hljs-number >94.5</span>% n_eff Rhat
+</code></pre> <p><span style="color:red;">// Image matching '/assets/models/non-identifiable/code/chains.svg' not found. //</span></p> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">mean      sd     <span class=hljs-number >5.5</span>%   <span class=hljs-number >94.5</span>% n_eff Rhat
  a1    -<span class=hljs-number >861.15</span> <span class=hljs-number >558.17</span> -<span class=hljs-number >1841.89</span>  -<span class=hljs-number >31.04</span>     <span class=hljs-number >7</span> <span class=hljs-number >1.43</span>
  a2     <span class=hljs-number >861.26</span> <span class=hljs-number >558.17</span>    <span class=hljs-number >31.31</span> <span class=hljs-number >1842.00</span>     <span class=hljs-number >7</span> <span class=hljs-number >1.43</span>
  sigma    <span class=hljs-number >0.97</span>   <span class=hljs-number >0.07</span>     <span class=hljs-number >0.89</span>    <span class=hljs-number >1.09</span>     <span class=hljs-number >9</span> <span class=hljs-number >1.17</span></code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->

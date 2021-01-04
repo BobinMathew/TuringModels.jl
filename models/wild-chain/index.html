@@ -11,26 +11,12 @@
 
 chains = sample(m8_2(y), NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre>
 <h2 id=output ><a href="#output">Output</a></h2>
-
+</p>
 
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre>
-<p> <img src="/TuringModels.jl/assets/models/wild-chain/code/output/chains.svg" alt=""></p>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">Summary Statistics
-  parameters          mean            std     naive_se          mcse        ess      rhat
-      Symbol       Float64        Float64      Float64       Float64    Float64   Float64
-
-           α   -26383.2905     67347.5346    2129.7160    18229.4924     4.9246    1.2167
-           σ   174844.5624   1828428.4772   57819.9853   121339.0024   139.0000    1.0068
-</code></pre>
-<pre><code class="julia hljs">describe(chains)[<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">Quantiles
-  parameters           2.5%       25.0%       50.0%        75.0%         97.5%
-      Symbol        Float64     Float64     Float64      Float64       Float64
-
-           α   -217231.2974   -777.4728     -0.3707     371.8480    19469.0799
-           σ         7.9133    193.1859   1348.3634   35321.3188   937348.9237
-</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/wild-chain/code/output/chains.svg" alt="">
 <div class=page-foot >
   <div class=copyright >
     <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors.
