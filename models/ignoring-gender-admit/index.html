@@ -1,37 +1,83 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Ignoring gender for admittance</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="/TuringModels.jl//github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Ignoring gender for admittance</h1> </div> <div class=franklin-content > <pre><code class="julia hljs"><span class=hljs-keyword >using</span> TuringModels
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Ignoring gender for admittance</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Ignoring gender for admittance</h1> </div> <div class=franklin-content > <p>This is model 13.4 from Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
 
-<span class=hljs-comment ># This script requires latest LKJ bijectors support.</span>
-<span class=hljs-comment ># `] add Bijectors#master` to get latest Bijectors.</span>
+<span class=hljs-keyword >using</span> DataFrames
+<span class=hljs-keyword >using</span> Turing
+<span class=hljs-keyword >using</span> TuringModels
 
-data_path = joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;UCBadmit.csv&quot;</span>)
-delim = <span class=hljs-string >&quot;;&quot;</span>
-d = CSV.read(data_path, DataFrame; delim)
+data_path = joinpath(TuringModels.project_root, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;UCBadmit.csv&quot;</span>)
+df = CSV.read(data_path, DataFrame; delim=<span class=hljs-string >&#x27;;&#x27;</span>)
 
-dept_map = <span class=hljs-built_in >Dict</span>(key =&gt; idx <span class=hljs-keyword >for</span> (idx, key) <span class=hljs-keyword >in</span> enumerate(unique(d.dept)))
-d.male = [g == <span class=hljs-string >&quot;male&quot;</span> ? <span class=hljs-number >1</span> : <span class=hljs-number >0</span> <span class=hljs-keyword >for</span> g <span class=hljs-keyword >in</span> d.gender]
-d.dept_id = [dept_map[de] <span class=hljs-keyword >for</span> de <span class=hljs-keyword >in</span> d.dept]
-
-<span class=hljs-meta >@model</span> m13_4(applications, dept_id, male, admit) = <span class=hljs-keyword >begin</span>
+dept_map = <span class=hljs-built_in >Dict</span>(key =&gt; idx <span class=hljs-keyword >for</span> (idx, key) <span class=hljs-keyword >in</span> enumerate(unique(df.dept)))
+df.male = [g == <span class=hljs-string >&quot;male&quot;</span> ? <span class=hljs-number >1</span> : <span class=hljs-number >0</span> <span class=hljs-keyword >for</span> g <span class=hljs-keyword >in</span> df.gender]
+df.dept_id = [dept_map[de] <span class=hljs-keyword >for</span> de <span class=hljs-keyword >in</span> df.dept]
+df</code></pre><pre><code class="plaintext hljs">12×7 DataFrame
+ Row │ dept    gender  admit  reject  applications  male   dept_id
+     │ String  String  Int64  Int64   Int64         Int64  Int64
+─────┼─────────────────────────────────────────────────────────────
+   1 │ A       male      512     313           825      1        1
+   2 │ A       female     89      19           108      0        1
+   3 │ B       male      353     207           560      1        2
+   4 │ B       female     17       8            25      0        2
+   5 │ C       male      120     205           325      1        3
+   6 │ C       female    202     391           593      0        3
+   7 │ D       male      138     279           417      1        4
+   8 │ D       female    131     244           375      0        4
+   9 │ E       male       53     138           191      1        5
+  10 │ E       female     94     299           393      0        5
+  11 │ F       male       22     351           373      1        6
+  12 │ F       female     24     317           341      0        6</code></pre> <h2 id=model ><a href="#model">Model</a></h2> <pre><code class="julia hljs"><span class=hljs-meta >@model</span> <span class=hljs-keyword >function</span> m13_4(applications, dept_id, male, admit)
     sigma_dept ~ truncated(Cauchy(<span class=hljs-number >0</span>, <span class=hljs-number >2</span>), <span class=hljs-number >0</span>, <span class=hljs-literal >Inf</span>)
-    a ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)    
+    a ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
     a_dept ~ filldist(Normal(a, sigma_dept), <span class=hljs-number >6</span>)
-    
+
     logit_p = a_dept[dept_id]
-    
+
     admit .~ BinomialLogit.(applications, logit_p)
-<span class=hljs-keyword >end</span>
-
-chns = sample(
-    m13_4(d.applications, d.dept_id, d.male, d.admit),
-    Turing.NUTS(<span class=hljs-number >0.95</span>),
+<span class=hljs-keyword >end</span>;</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs">chains = sample(
+    m13_4(df.applications, df.dept_id, df.male, df.admit),
+    Turing.NUTS(<span class=hljs-number >0.65</span>),
     <span class=hljs-number >5000</span>
-)
+)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (5000×20×1 Array{Float64,3}):
 
-m_13_4_rethinking = <span class=hljs-string >&quot;&quot;&quot;
+Iterations        = 1:5000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 5000
+parameters        = a, a_dept[1], a_dept[2], a_dept[3], a_dept[4], a_dept[5], a_dept[6], sigma_dept
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
+
+Summary Statistics
+  parameters      mean       std   naive_se      mcse         ess      rhat
+      Symbol   Float64   Float64    Float64   Float64     Float64   Float64
+
+           a   -0.6375    0.6301     0.0089    0.0098   4846.5360    1.0000
+   a_dept[1]    0.5899    0.0694     0.0010    0.0008   6515.3478    1.0001
+   a_dept[2]    0.5370    0.0852     0.0012    0.0010   6762.2464    0.9998
+   a_dept[3]   -0.6163    0.0686     0.0010    0.0010   6028.5412    1.0000
+   a_dept[4]   -0.6645    0.0755     0.0011    0.0009   6610.4540    0.9999
+   a_dept[5]   -1.0887    0.0955     0.0014    0.0013   6525.5528    1.0000
+   a_dept[6]   -2.6562    0.1467     0.0021    0.0019   6266.4749    0.9998
+  sigma_dept    1.4490    0.5687     0.0080    0.0104   3673.8639    0.9999
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           a   -1.8487   -1.0018   -0.6555   -0.2778    0.6477
+   a_dept[1]    0.4565    0.5429    0.5881    0.6382    0.7245
+   a_dept[2]    0.3701    0.4802    0.5371    0.5956    0.7044
+   a_dept[3]   -0.7515   -0.6617   -0.6168   -0.5689   -0.4818
+   a_dept[4]   -0.8134   -0.7159   -0.6641   -0.6139   -0.5155
+   a_dept[5]   -1.2743   -1.1528   -1.0878   -1.0241   -0.9031
+   a_dept[6]   -2.9513   -2.7527   -2.6535   -2.5522   -2.3813
+  sigma_dept    0.7666    1.0754    1.3253    1.6723    2.8219
+</code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/ignoring-gender-admit/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m_13_4_rethinking = <span class=hljs-string >&quot;&quot;&quot;
 Inference for Stan model: 0c5c36512c20c41995d1bd25be525138.
-    3 chains, each with iter=4500; warmup=500; thin=1; 
+    3 chains, each with iter=4500; warmup=500; thin=1;
     post-warmup draws per chain=4000, total post-warmup draws=12000.
-    
+
                    mean se_mean   sd     2.5%      25%      50%      75%    97.5%
     a_dept[1]      0.59    0.00 0.07     0.46     0.54     0.59     0.64     0.73
     a_dept[2]      0.54    0.00 0.09     0.37     0.48     0.54     0.60     0.71
@@ -51,7 +97,5 @@ Inference for Stan model: 0c5c36512c20c41995d1bd25be525138.
     a_dept[6]  13363    1
     a           6965    1
     sigma_dept  5643    1
-    lp__        5322    1    
-&quot;&quot;&quot;</span>
-
-chns |&gt; display</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman and contributors. Last modified: January 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+    lp__        5322    1
+&quot;&quot;&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 05, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->

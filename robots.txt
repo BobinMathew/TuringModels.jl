@@ -1,4 +1,4 @@
-Sitemap: https://rikhuijzer.github.io/TuringModels.jl/sitemap.xml
+Sitemap: https://statisticalrethinkingjulia.github.io/TuringModels.jl/sitemap.xml
 
 User-agent: *
 Disallow:
