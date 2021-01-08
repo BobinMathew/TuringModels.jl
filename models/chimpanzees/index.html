@@ -1,33 +1,68 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Chimpanzees</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Chimpanzees</h1> </div> <div class=franklin-content > <pre><code class="julia hljs"><span class=hljs-keyword >using</span> TuringModels, StatsFuns
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Chimpanzees</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Chimpanzees</h1> </div> <div class=franklin-content > <p>This is the third Chimpanzees model &#40;<code>m10.3</code>&#41; in Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+<span class=hljs-keyword >import</span> TuringModels
 
-delim=<span class=hljs-string >&#x27;;&#x27;</span>
-d = CSV.read(joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;chimpanzees.csv&quot;</span>), DataFrame; delim);
-size(d) <span class=hljs-comment ># Should be 504x8</span>
+<span class=hljs-keyword >using</span> DataFrames
 
-<span class=hljs-comment ># pulled_left, condition, prosoc_left</span>
-<span class=hljs-meta >@model</span> m10_3(y, x₁, x₂) = <span class=hljs-keyword >begin</span>
+file_path = joinpath(TuringModels.project_root, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;chimpanzees.csv&quot;</span>)
+df = CSV.read(file_path, DataFrame; delim=<span class=hljs-string >&#x27;;&#x27;</span>);</code></pre> <h2 id=model ><a href="#model">Model</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsFuns
+<span class=hljs-keyword >using</span> Turing
+
+<span class=hljs-meta >@model</span> <span class=hljs-keyword >function</span> m10_3(y, x₁, x₂)
     α ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
     βp ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
     βpC ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
 
     logits = α .+ (βp .+ βpC * x₁) .* x₂
     y .~ BinomialLogit.(<span class=hljs-number >1</span>, logits)
-<span class=hljs-keyword >end</span>;
+<span class=hljs-keyword >end</span>
+model = m10_3(df.pulled_left, df.condition, df.prosoc_left)</code></pre><pre><code class="plaintext hljs">DynamicPPL.Model{var&quot;#1#2&quot;,(:y, :x₁, :x₂),(),(),Tuple{Array{Int64,1},Array{Int64,1},Array{Int64,1}},Tuple{}}(:m10_3, var&quot;#1#2&quot;(), (y = [0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], x₁ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], x₂ = [0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0]), NamedTuple())</code></pre>
+<h2 id=output ><a href="#output">Output</a></h2>
+<pre><code class="julia hljs">chains = sample(model, NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >2000</span>)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (2000×15×1 Array{Float64,3}):
 
-chns = sample(m10_3(d[:,:pulled_left], d[:,:condition], d[:,:prosoc_left]),
-  Turing.NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >2000</span>);
+Iterations        = 1:2000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 2000
+parameters        = α, βp, βpC
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
-<span class=hljs-comment ># Rethinking result</span>
+Summary Statistics
+  parameters      mean       std   naive_se      mcse         ess      rhat
+      Symbol   Float64   Float64    Float64   Float64     Float64   Float64
 
-m_10_03t_result = <span class=hljs-string >&quot;
+           α    0.0524    0.1263     0.0028    0.0049   1102.9515    1.0008
+          βp    0.6159    0.2290     0.0051    0.0065   1297.7555    0.9998
+         βpC   -0.1115    0.2626     0.0059    0.0054   1277.8693    1.0012
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           α   -0.1980   -0.0319    0.0552    0.1352    0.2947
+          βp    0.1842    0.4588    0.6104    0.7701    1.0710
+         βpC   -0.6131   -0.2891   -0.1096    0.0650    0.4003
+</code></pre>
+</p>
+
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/chimpanzees/code/output/chains.svg" alt="">
+<h2 id=original_output ><a href="#original_output">Original output</a></h2>
+<pre><code class="julia hljs"><span class=hljs-string >&quot;&quot;&quot;
       Mean StdDev lower 0.89 upper 0.89 n_eff Rhat
  a    0.05   0.13      -0.15       0.25  3284    1
  bp   0.62   0.22       0.28       0.98  3032    1
  bpC -0.11   0.26      -0.53       0.29  3184    1
-&quot;</span>;
+&quot;&quot;&quot;</span>;</code></pre>
 
-<span class=hljs-comment ># Describe the draws</span>
-
-chns |&gt; display
-
-<span class=hljs-comment ># End of m10.03t.jl</span></code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 05, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+<div class=page-foot >
+  <div class=copyright >
+    <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors.
+    Last modified: January 08, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+    </div> 
+    </div> 
+    </div> <!-- end of class page-wrap-->

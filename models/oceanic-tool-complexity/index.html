@@ -1,13 +1,30 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Oceanic tool complexity</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Oceanic tool complexity</h1> </div> <div class=franklin-content > <pre><code class="julia hljs"><span class=hljs-keyword >using</span> TuringModels
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Oceanic tool complexity</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Oceanic tool complexity</h1> </div> <div class=franklin-content > <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+<span class=hljs-keyword >import</span> TuringModels
+
+<span class=hljs-keyword >using</span> DataFrames
 
 delim = <span class=hljs-string >&#x27;;&#x27;</span>
-d = CSV.read(joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;Kline.csv&quot;</span>), DataFrame; delim);
-size(d) <span class=hljs-comment ># Should be 10x5</span>
+data_path = joinpath(TuringModels.project_root, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;Kline.csv&quot;</span>)
+df = CSV.read(data_path, DataFrame; delim)
 
-d.log_pop = map(log, d.population)
+df.log_pop = log.(df.population)
 
 <span class=hljs-comment ># New col contact_high, set binary values 1/0 if high/low contact</span>
-d.contact_high = [contact == <span class=hljs-string >&quot;high&quot;</span> ? <span class=hljs-number >1</span> : <span class=hljs-number >0</span> <span class=hljs-keyword >for</span> contact <span class=hljs-keyword >in</span> d.contact]
+df.contact_high = [contact == <span class=hljs-string >&quot;high&quot;</span> ? <span class=hljs-number >1</span> : <span class=hljs-number >0</span> <span class=hljs-keyword >for</span> contact <span class=hljs-keyword >in</span> df.contact]
+df</code></pre><pre><code class="plaintext hljs">10×7 DataFrame
+ Row │ culture     population  contact  total_tools  mean_TU  log_pop   contact_high
+     │ String      Int64       String   Int64        Float64  Float64   Int64
+─────┼───────────────────────────────────────────────────────────────────────────────
+   1 │ Malekula          1100  low               13      3.2   7.00307             0
+   2 │ Tikopia           1500  low               22      4.7   7.31322             0
+   3 │ Santa Cruz        3600  low               24      4.0   8.18869             0
+   4 │ Yap               4791  high              43      5.0   8.47449             1
+   5 │ Lau Fiji          7400  high              33      5.0   8.90924             1
+   6 │ Trobriand         8000  high              19      4.0   8.9872              1
+   7 │ Chuuk             9200  high              40      3.8   9.12696             1
+   8 │ Manus            13000  low               28      6.6   9.4727              0
+   9 │ Tonga            17500  high              55      5.4   9.76996             1
+  10 │ Hawaii          275000  low               71      6.6  12.5245              0</code></pre> <h2 id=model ><a href="#model">Model</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Turing
 
 <span class=hljs-comment ># This is supposed to be a &quot;bad&quot; model since we take non-centered data for the</span>
 <span class=hljs-comment ># predictor log_pop</span>
@@ -22,21 +39,42 @@ d.contact_high = [contact == <span class=hljs-string >&quot;high&quot;</span> ? 
             βpc*contact_high[i]*log_pop[i])
         total_tools[i] ~ Poisson(λ)
     <span class=hljs-keyword >end</span>
-<span class=hljs-keyword >end</span>;
+<span class=hljs-keyword >end</span>;</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs">chains = sample(
+    m10_10stan(df.total_tools, df.log_pop, df.contact_high),
+    NUTS(<span class=hljs-number >0.65</span>),
+    <span class=hljs-number >1000</span>
+)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (1000×16×1 Array{Float64,3}):
 
-posterior = sample(m10_10stan(d[:, :total_tools], d[:, :log_pop],
-    d[:, :contact_high]), Turing.NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>);
+Iterations        = 1:1000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 1000
+parameters        = α, βc, βp, βpc
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
-<span class=hljs-comment ># Rethinking result</span>
+Summary Statistics
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-m_10_10t_result = <span class=hljs-string >&quot;
+           α    0.9078    0.3608     0.0114    0.0230   310.9240    1.0002
+          βc   -0.0908    0.7921     0.0250    0.0330   458.6586    1.0004
+          βp    0.2667    0.0344     0.0011    0.0022   310.4094    0.9996
+         βpc    0.0438    0.0864     0.0027    0.0034   465.6268    1.0004
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           α    0.1336    0.6731    0.9196    1.1550    1.5856
+          βc   -1.5943   -0.6677   -0.1078    0.4534    1.4607
+          βp    0.2007    0.2429    0.2650    0.2891    0.3371
+         βpc   -0.1295   -0.0172    0.0464    0.1054    0.2102
+</code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/oceanic-tool-complexity/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m_10_10t_result = <span class=hljs-string >&quot;
      mean   sd  5.5% 94.5% n_eff Rhat
  a    0.94 0.37  0.36  1.53  3379    1
  bp   0.26 0.04  0.21  0.32  3347    1
  bc  -0.08 0.84 -1.41  1.23  2950    1
  bpc  0.04 0.09 -0.10  0.19  2907    1
-&quot;</span>;
-
-<span class=hljs-comment ># Describe the draws</span>
-
-posterior |&gt; display</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 05, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 08, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->

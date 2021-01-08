@@ -1,52 +1,102 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Spatial autocorrelation in Oceanic tools</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Spatial autocorrelation in Oceanic tools</h1> </div> <div class=franklin-content > <pre><code class="julia hljs"><span class=hljs-keyword >using</span> TuringModels
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Spatial autocorrelation in Oceanic tools</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Spatial autocorrelation in Oceanic tools</h1> </div> <div class=franklin-content > <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+<span class=hljs-keyword >import</span> TuringModels
+
+<span class=hljs-keyword >using</span> DataFrames
 <span class=hljs-keyword >using</span> RData
 <span class=hljs-keyword >using</span> LinearAlgebra
 
-<span class=hljs-comment ># This script requires latest LKJ bijectors support.</span>
-<span class=hljs-comment ># `] add Bijectors#master` to get latest Bijectors.</span>
+data_dir = joinpath(TuringModels.project_root, <span class=hljs-string >&quot;data&quot;</span>)
+kline_path = joinpath(data_dir, <span class=hljs-string >&quot;Kline2.csv&quot;</span>)
+df = CSV.read(kline_path, DataFrame; delim=<span class=hljs-string >&#x27;;&#x27;</span>)
 
-data_root = joinpath(<span class=hljs-meta >@__DIR__</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;..&quot;</span>, <span class=hljs-string >&quot;data&quot;</span>)
-delim = <span class=hljs-string >&quot;;&quot;</span>
+dmat_path = joinpath(data_dir, <span class=hljs-string >&quot;islandsDistMatrix.rda&quot;</span>)
+dmat = load(dmat_path)[<span class=hljs-string >&quot;islandsDistMatrix&quot;</span>]
 
-Kline2_path = joinpath(data_root, <span class=hljs-string >&quot;Kline2.csv&quot;</span>)
-delim = <span class=hljs-string >&quot;;&quot;</span>
-d = CSV.read(Kline2_path, DataFrame; delim)
+df.society = <span class=hljs-number >1</span>:<span class=hljs-number >10</span></code></pre><pre><code class="plaintext hljs">1:10</code></pre>
+<h2 id=model ><a href="#model">Model</a></h2>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Turing
 
-Dmat_path = joinpath(data_root, <span class=hljs-string >&quot;islandsDistMatrix.rda&quot;</span>)
-Dmat = load(Dmat_path)[<span class=hljs-string >&quot;islandsDistMatrix&quot;</span>]
-
-d.society = <span class=hljs-number >1</span>:<span class=hljs-number >10</span>
-
-<span class=hljs-meta >@model</span> m13_7(Dmat, society, logpop, total_tools) = <span class=hljs-keyword >begin</span>
+<span class=hljs-meta >@model</span> <span class=hljs-keyword >function</span> m13_7(Dmat, society, logpop, total_tools)
     rhosq ~ truncated(Cauchy(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>), <span class=hljs-number >0</span>, <span class=hljs-literal >Inf</span>)
     etasq ~ truncated(Cauchy(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>), <span class=hljs-number >0</span>, <span class=hljs-literal >Inf</span>)
     bp ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>)
     a ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
-    
+
     <span class=hljs-comment ># GPL2</span>
     SIGMA_Dmat = etasq * exp.(-rhosq * Dmat.^<span class=hljs-number >2</span>)
     SIGMA_Dmat = SIGMA_Dmat + <span class=hljs-number >0.01</span>I
     SIGMA_Dmat = (SIGMA_Dmat&#x27; + SIGMA_Dmat) / <span class=hljs-number >2</span>
     g ~ MvNormal(zeros(<span class=hljs-number >10</span>), SIGMA_Dmat)
-    
+
     log_lambda = a .+ g[society] .+ bp * logpop
-    
+
     total_tools .~ Poisson.(exp.(log_lambda))
 <span class=hljs-keyword >end</span>
 
-chns = sample(
-    m13_7(Dmat, d.society, d.logpop, d.total_tools),
-    Turing.NUTS(<span class=hljs-number >0.65</span>),
+chains = sample(
+    m13_7(dmat, df.society, df.logpop, df.total_tools),
+    NUTS(<span class=hljs-number >0.65</span>),
     <span class=hljs-number >5000</span>
-)
+)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (5000×26×1 Array{Float64,3}):
 
-chns |&gt; display
+Iterations        = 1:5000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 5000
+parameters        = a, bp, etasq, g[1], g[2], g[3], g[4], g[5], g[6], g[7], g[8], g[9], g[10], rhosq
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
-m_13_7_rethinking = <span class=hljs-string >&quot;&quot;&quot;
+Summary Statistics
+  parameters      mean       std   naive_se      mcse         ess      rhat
+      Symbol   Float64   Float64    Float64   Float64     Float64   Float64
+
+           a    1.3341    1.2403     0.0175    0.0480    761.7516    0.9998
+          bp    0.2437    0.1195     0.0017    0.0041   1019.1629    0.9998
+       etasq    0.3631    0.6161     0.0087    0.0195    876.5754    1.0018
+        g[1]   -0.2792    0.4924     0.0070    0.0223    503.6248    0.9998
+        g[2]   -0.1358    0.4766     0.0067    0.0221    472.5478    1.0000
+        g[3]   -0.1786    0.4607     0.0065    0.0221    437.8042    1.0000
+        g[4]    0.2887    0.4186     0.0059    0.0201    440.8516    1.0001
+        g[5]    0.0201    0.4135     0.0058    0.0201    434.3986    0.9999
+        g[6]   -0.4652    0.4167     0.0059    0.0193    454.0924    0.9999
+        g[7]    0.0868    0.4024     0.0057    0.0193    437.2954    0.9999
+        g[8]   -0.2711    0.4070     0.0058    0.0195    434.5017    1.0000
+        g[9]    0.2280    0.3852     0.0054    0.0190    431.5710    0.9998
+       g[10]   -0.1193    0.4797     0.0068    0.0188    679.9054    0.9998
+       rhosq    1.1094    3.2704     0.0463    0.0786   2095.7424    1.0003
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           a   -1.2704    0.6283    1.3300    2.1014    3.8201
+          bp    0.0105    0.1692    0.2433    0.3131    0.4896
+       etasq    0.0257    0.1029    0.2037    0.4146    1.6184
+        g[1]   -1.2772   -0.5397   -0.2542   -0.0208    0.7053
+        g[2]   -1.0600   -0.3797   -0.1129    0.1047    0.8045
+        g[3]   -1.0682   -0.4075   -0.1499    0.0574    0.7355
+        g[4]   -0.4850    0.0858    0.2894    0.4882    1.1486
+        g[5]   -0.7561   -0.1732    0.0282    0.2151    0.8651
+        g[6]   -1.2824   -0.6763   -0.4447   -0.2371    0.2857
+        g[7]   -0.6888   -0.1007    0.0912    0.2839    0.8787
+        g[8]   -1.0840   -0.4678   -0.2510   -0.0585    0.4803
+        g[9]   -0.5373    0.0573    0.2337    0.4174    0.9628
+       g[10]   -1.0920   -0.3614   -0.1103    0.1391    0.8073
+       rhosq    0.0309    0.1443    0.3808    0.9442    6.8462
+</code></pre>
+<h2 id=output ><a href="#output">Output</a></h2>
+</p>
+
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/spatial-autocorrelation-oceanic/code/output/chains.svg" alt="">
+<h2 id=original_output ><a href="#original_output">Original output</a></h2>
+<pre><code class="julia hljs">m_13_7_rethinking = <span class=hljs-string >&quot;&quot;&quot;
 Inference for Stan model: 6422d8042e9cdd08dae2420ad26842f1.
-    4 chains, each with iter=10000; warmup=2000; thin=1; 
+    4 chains, each with iter=10000; warmup=2000; thin=1;
     post-warmup draws per chain=8000, total post-warmup draws=32000.
-    
+
             mean se_mean    sd   2.5%    25%    50%    75%  97.5% n_eff Rhat
     g[1]   -0.27    0.01  0.44  -1.26  -0.50  -0.24  -0.01   0.53  3278    1
     g[2]   -0.13    0.01  0.43  -1.07  -0.34  -0.10   0.12   0.67  3144    1
@@ -62,5 +112,16 @@ Inference for Stan model: 6422d8042e9cdd08dae2420ad26842f1.
     bp      0.25    0.00  0.11   0.02   0.18   0.24   0.31   0.47  5634    1
     etasq   0.34    0.01  0.53   0.03   0.10   0.20   0.39   1.52  5643    1
     rhosq   1.52    0.09 11.82   0.03   0.16   0.39   0.96   7.96 15955    1
-    lp__  925.98    0.03  2.96 919.16 924.20 926.34 928.14 930.67  7296    1    
-&quot;&quot;&quot;</span></code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 05, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+    lp__  925.98    0.03  2.96 919.16 924.20 926.34 928.14 930.67  7296    1
+&quot;&quot;&quot;</span>;</code></pre>
+
+<div class=page-foot >
+  <div class=copyright >
+    <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors.
+    Last modified: January 08, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+    </div> 
+    </div> 
+    </div> <!-- end of class page-wrap-->

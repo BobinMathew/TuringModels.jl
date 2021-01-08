@@ -1,0 +1,1 @@
+DynamicPPL.Model{Main.FD_SANDBOX_10435591421578998415.var"#1#2",(:admit, :applications),(),(),Tuple{Array{Int64,1},Array{Int64,1}},Tuple{}}(:m11_5, Main.FD_SANDBOX_10435591421578998415.var"#1#2"(), (admit = [512, 89, 353, 17, 120, 202, 138, 131, 53, 94, 22, 24], applications = [825, 108, 560, 25, 325, 593, 417, 375, 191, 393, 373, 341]), NamedTuple())

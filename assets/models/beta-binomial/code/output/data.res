@@ -1,1 +1,0 @@
-"/home/runner/work/TuringModels.jl/TuringModels.jl/__site/assets/models/beta-binomial/code/output/data.csv"
