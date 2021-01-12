@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Africa</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Africa</h1> </div> <div class=franklin-content ><p>This is the first Stan model in Statistical Rethinking Edition 1 &#40;page 249&#41;.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a><li><a href="#df">df</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFrames
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Africa</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Africa</h1> </div> <div class=franklin-content ><p>This is the first Stan model in Statistical Rethinking Edition 1 &#40;page 249&#41;.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a><li><a href="#df">df</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFrames
 <span class=hljs-keyword >using</span> Turing
 <span class=hljs-keyword >using</span> TuringModels
 
@@ -37,21 +37,21 @@ Summary Statistics
   parameters      mean       std   naive_se      mcse        ess      rhat
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           α    9.2196    0.1348     0.0043    0.0061   428.5660    0.9997
-          βA   -1.9460    0.2301     0.0073    0.0104   470.0520    1.0001
-         βAR    0.3951    0.1315     0.0042    0.0061   462.0088    1.0000
-          βR   -0.2026    0.0757     0.0024    0.0026   461.3135    0.9994
-           σ    0.9506    0.0547     0.0017    0.0026   548.0803    1.0004
+           α    9.2246    0.1454     0.0046    0.0051   382.8163    1.0011
+          βA   -1.9531    0.2214     0.0070    0.0094   372.6356    1.0025
+         βAR    0.3976    0.1322     0.0042    0.0057   433.3948    1.0005
+          βR   -0.2039    0.0792     0.0025    0.0037   397.9423    0.9998
+           σ    0.9500    0.0524     0.0017    0.0019   726.1463    0.9998
 
 Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-           α    8.9584    9.1305    9.2254    9.3136    9.4787
-          βA   -2.3707   -2.1014   -1.9504   -1.7916   -1.4846
-         βAR    0.1504    0.3045    0.3947    0.4779    0.6820
-          βR   -0.3539   -0.2516   -0.2049   -0.1491   -0.0496
-           σ    0.8505    0.9133    0.9500    0.9844    1.0696
+           α    8.9411    9.1295    9.2184    9.3180    9.5265
+          βA   -2.3567   -2.1011   -1.9535   -1.7970   -1.5172
+         βAR    0.1514    0.3024    0.4028    0.4908    0.6579
+          βR   -0.3570   -0.2620   -0.2037   -0.1503   -0.0535
+           σ    0.8588    0.9134    0.9504    0.9837    1.0644
 </code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/africa/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs"><span class=hljs-string >&quot;&quot;&quot;
@@ -248,4 +248,4 @@ sigma  0.85376115  0.91363250  0.9484920  0.98405750  1.058573750
  167 │  6.66918    2.323            0
  168 │  9.1505     1.761            1
  169 │  6.65158    0.533            1
- 170 │  7.82373    1.194            1</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+ 170 │  7.82373    1.194            1</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob J Goedman, Rik Huijzer and contributors. Last modified: January 12, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>

@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/jtd.css"> <link rel=icon  href="/TuringModels.jl/assets/favicon.png"> <title>Estimate handedness for each Chimpanzee</title> <div class=page-wrap > <div class=side-bar > <div class=header > <a href="/TuringModels.jl/" class=title > TuringModels </a> </div> <label for=show-menu  class=show-menu >MENU</label> <input type=checkbox  id=show-menu  role=button > <div class=menu  id=side-menu > <ul class=menu-list > <li class="menu-list-item "><a href="/TuringModels.jl/" class="menu-list-link ">Home</a> <li class="menu-list-item "><a href="/TuringModels.jl/models" class="menu-list-link ">Models</a> </ul> </div> </div> <div class=main-content-wrap > <div class=main-content > <div class=main-header > <a id=github  target=_blank  href="https://github.com/StatisticalRethinkingJulia/TuringModels.jl">TuringModels on GitHub </a> </div> <div class=franklin-content > <h1>Estimate handedness for each Chimpanzee</h1> </div> <div class=franklin-content > <p>This is model <code>m10.4</code> in Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Estimate handedness for each Chimpanzee</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Estimate handedness for each Chimpanzee</h1> </div> <div class=franklin-content > <p>This is model <code>m10.4</code> in Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
 <span class=hljs-keyword >import</span> TuringModels
 
 <span class=hljs-keyword >using</span> DataFrames
@@ -537,32 +537,32 @@ parameters        = α[1], α[2], α[3], α[4], α[5], α[6], α[7], βp, βpC
 internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
 Summary Statistics
-  parameters      mean       std   naive_se      mcse         ess      rhat
-      Symbol   Float64   Float64    Float64   Float64     Float64   Float64
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-        α[1]   -0.7366    0.2804     0.0089    0.0055   1139.2095    0.9991
-        α[2]   10.9880    5.3681     0.1698    0.2971    344.2546    1.0017
-        α[3]   -1.0547    0.2927     0.0093    0.0076    958.7433    0.9990
-        α[4]   -1.0495    0.2604     0.0082    0.0098    748.4297    0.9993
-        α[5]   -0.7472    0.2878     0.0091    0.0080   1050.0910    0.9994
-        α[6]    0.2155    0.2859     0.0090    0.0103    864.1837    1.0000
-        α[7]    1.7915    0.4003     0.0127    0.0122    840.4924    0.9998
-          βp    0.8392    0.2564     0.0081    0.0093    473.2208    0.9991
-         βpC   -0.1339    0.2801     0.0089    0.0092    819.5324    0.9996
+        α[1]   -0.7348    0.2666     0.0084    0.0057   840.7312    0.9996
+        α[2]   11.2619    5.3357     0.1687    0.1794   367.0515    0.9990
+        α[3]   -1.0456    0.2878     0.0091    0.0130   611.5656    1.0007
+        α[4]   -1.0454    0.2772     0.0088    0.0111   719.3229    0.9991
+        α[5]   -0.7299    0.2668     0.0084    0.0060   612.4746    0.9993
+        α[6]    0.2236    0.2734     0.0086    0.0101   720.0334    0.9990
+        α[7]    1.8006    0.3994     0.0126    0.0085   906.1540    0.9994
+          βp    0.8241    0.2599     0.0082    0.0102   355.0687    0.9991
+         βpC   -0.1280    0.2996     0.0095    0.0100   599.4667    1.0011
 
 Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-        α[1]   -1.3098   -0.9197   -0.7252   -0.5494   -0.1869
-        α[2]    3.9235    6.6628   10.1314   14.2931   23.2962
-        α[3]   -1.6077   -1.2525   -1.0424   -0.8622   -0.5093
-        α[4]   -1.5542   -1.2338   -1.0592   -0.8798   -0.5367
-        α[5]   -1.2964   -0.9435   -0.7504   -0.5690   -0.1767
-        α[6]   -0.3272    0.0275    0.2188    0.3978    0.8243
-        α[7]    1.0842    1.5080    1.7778    2.0754    2.5939
-          βp    0.3336    0.6664    0.8344    1.0124    1.3366
-         βpC   -0.7007   -0.3133   -0.1329    0.0534    0.3942
+        α[1]   -1.2691   -0.9268   -0.7287   -0.5439   -0.2313
+        α[2]    3.9775    7.1976   10.1160   14.3566   23.4272
+        α[3]   -1.6260   -1.2294   -1.0405   -0.8635   -0.4933
+        α[4]   -1.5995   -1.2262   -1.0536   -0.8482   -0.4997
+        α[5]   -1.2367   -0.9196   -0.7109   -0.5586   -0.1965
+        α[6]   -0.3169    0.0436    0.2165    0.4046    0.7719
+        α[7]    1.0791    1.5261    1.7923    2.0806    2.6029
+          βp    0.3306    0.6488    0.8193    0.9859    1.3488
+         βpC   -0.7434   -0.3248   -0.1206    0.0701    0.4490
 </code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/estimate-handedness-chimpanzees/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m_10_04s_result = <span class=hljs-string >&quot;
@@ -582,4 +582,4 @@ a.6  0.21599365 0.26307574 0.0041595927 0.0045153523 1000
 a.7  1.81090866 0.39318577 0.0062168129 0.0071483527 1000
 bp  0.83979926 0.26284676 0.0041559722 0.0059795826 1000
 bpC -0.12913322 0.29935741 0.0047332562 0.0049519863 1000
-&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> Rob J Goedman, Rik Huijzer and contributors. Last modified: January 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
+&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob J Goedman, Rik Huijzer and contributors. Last modified: January 12, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
