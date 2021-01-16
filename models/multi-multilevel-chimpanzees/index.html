@@ -1,0 +1,114 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel="shortcut icon" type="image/png" href="/TuringModels.jl/assets/favicon.png"/> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Multi-multilevel Chimpanzees</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Multi-multilevel Chimpanzees</h1> </div> <div class=franklin-content > <p>In Statistical Rethinking Edition 1, McElreath adds yet another varying intercept, adaptive prior and standard deviation parameter to the Chimpanzees model.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+
+<span class=hljs-keyword >using</span> TuringModels: project_root
+<span class=hljs-keyword >using</span> DataFrames
+
+path = joinpath(project_root, <span class=hljs-string >&quot;data&quot;</span>, <span class=hljs-string >&quot;chimpanzees.csv&quot;</span>)
+df = CSV.read(path, DataFrame; delim=<span class=hljs-string >&#x27;;&#x27;</span>);</code></pre> <h2 id=model ><a href="#model">Model</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Turing
+
+<span class=hljs-meta >@model</span> m12_5(pulled_left, actor, block, condition, prosoc_left) = <span class=hljs-keyword >begin</span>
+    <span class=hljs-comment ># Total num of y</span>
+    N = length(pulled_left)
+
+    <span class=hljs-comment ># Separate σ priors for each actor and block</span>
+    σ_actor ~ truncated(Cauchy(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>), <span class=hljs-number >0</span>, <span class=hljs-literal >Inf</span>)
+    σ_block ~ truncated(Cauchy(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>), <span class=hljs-number >0</span>, <span class=hljs-literal >Inf</span>)
+
+    <span class=hljs-comment ># Number of unique actors in the data set</span>
+    N_actor = length(unique(actor)) <span class=hljs-comment >## 7</span>
+    N_block = length(unique(block))
+
+    <span class=hljs-comment ># Vector of actors (1,..,7) which we&#x27;ll set priors on</span>
+    α_actor ~ filldist(Normal(<span class=hljs-number >0</span>, σ_actor), N_actor)
+    α_block ~ filldist(Normal(<span class=hljs-number >0</span>, σ_block), N_block)
+
+    <span class=hljs-comment ># Prior for intercept, prosoc_left, and the interaction</span>
+    α ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
+    βp ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
+    βpC ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
+
+    logitp = α .+ α_actor[actor] + α_block[block] .+
+            (βp .+ βpC * condition) .* prosoc_left
+
+    pulled_left .~ BinomialLogit.(<span class=hljs-number >1</span>, logitp)
+<span class=hljs-keyword >end</span>;</code></pre> <h2 id=output ><a href="#output">Output</a></h2> <pre><code class="julia hljs">chains = sample(
+    m12_5(df.pulled_left, df.actor, df.block, df.condition, df.prosoc_left),
+    NUTS(<span class=hljs-number >0.65</span>),
+    <span class=hljs-number >1000</span>
+)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (1000×30×1 Array{Float64,3}):
+
+Iterations        = 1:1000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 1000
+parameters        = α, α_actor[1], α_actor[2], α_actor[3], α_actor[4], α_actor[5], α_actor[6], α_actor[7], α_block[1], α_block[2], α_block[3], α_block[4], α_block[5], α_block[6], βp, βpC, σ_actor, σ_block
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
+
+Summary Statistics
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
+
+           α    0.4199    1.1725     0.0371    0.1100   124.3272    1.0231
+  α_actor[1]   -1.1362    1.1778     0.0372    0.1120   128.3040    1.0237
+  α_actor[2]    4.3885    1.7611     0.0557    0.1035   273.5694    1.0008
+  α_actor[3]   -1.4431    1.1811     0.0373    0.1103   131.8267    1.0215
+  α_actor[4]   -1.4552    1.1848     0.0375    0.1106   131.5492    1.0201
+  α_actor[5]   -1.1314    1.1731     0.0371    0.1102   132.8429    1.0185
+  α_actor[6]   -0.1880    1.1707     0.0370    0.1142   126.6392    1.0203
+  α_actor[7]    1.3571    1.1858     0.0375    0.1055   140.9784    1.0144
+  α_block[1]   -0.2144    0.2512     0.0079    0.0154   276.8845    1.0188
+  α_block[2]    0.0405    0.2054     0.0065    0.0123   464.2391    0.9991
+  α_block[3]    0.0675    0.2073     0.0066    0.0110   512.1197    0.9998
+  α_block[4]    0.0137    0.2143     0.0068    0.0107   510.0416    1.0004
+  α_block[5]   -0.0409    0.2106     0.0067    0.0105   517.7488    1.0032
+  α_block[6]    0.1273    0.2276     0.0072    0.0135   379.1097    0.9997
+          βp    0.8427    0.2522     0.0080    0.0063   807.1476    0.9992
+         βpC   -0.1570    0.2957     0.0094    0.0088   855.1755    0.9990
+     σ_actor    2.4178    0.9657     0.0305    0.0586   290.6299    1.0156
+     σ_block    0.2646    0.1938     0.0061    0.0131   170.8475    1.0209
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol   Float64   Float64   Float64   Float64   Float64
+
+           α   -1.7638   -0.2917    0.3208    1.0393    3.0513
+  α_actor[1]   -3.7443   -1.7439   -1.0636   -0.4091    0.9992
+  α_actor[2]    1.7634    3.2578    4.1136    5.2221    8.7197
+  α_actor[3]   -4.2691   -2.0753   -1.3577   -0.7022    0.6700
+  α_actor[4]   -4.1140   -2.0903   -1.3877   -0.6983    0.7796
+  α_actor[5]   -3.6951   -1.7277   -1.0441   -0.4172    0.9440
+  α_actor[6]   -2.8282   -0.8376   -0.0900    0.5017    1.9404
+  α_actor[7]   -1.2555    0.7601    1.3952    2.1083    3.5033
+  α_block[1]   -0.7806   -0.3455   -0.1629   -0.0368    0.1564
+  α_block[2]   -0.3836   -0.0657    0.0305    0.1473    0.4806
+  α_block[3]   -0.3415   -0.0466    0.0443    0.1720    0.5408
+  α_block[4]   -0.4190   -0.0952    0.0038    0.1148    0.4913
+  α_block[5]   -0.5218   -0.1508   -0.0263    0.0702    0.3703
+  α_block[6]   -0.2516   -0.0109    0.0814    0.2439    0.6714
+          βp    0.3546    0.6718    0.8311    1.0023    1.3577
+         βpC   -0.7334   -0.3516   -0.1456    0.0338    0.4317
+     σ_actor    1.1582    1.7318    2.1837    2.8622    4.8689
+     σ_block    0.0406    0.1300    0.2235    0.3489    0.7854
+</code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/multi-multilevel-chimpanzees/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m125rethinking = <span class=hljs-string >&quot;
+             Mean StdDev lower 0.89 upper 0.89 n_eff Rhat
+a_actor[1]  -1.19   0.98      -2.66       0.35  3451    1
+a_actor[2]   4.14   1.59       1.87       6.38  5514    1
+a_actor[3]  -1.49   0.99      -2.96       0.05  3493    1
+a_actor[4]  -1.50   0.98      -3.00       0.01  3340    1
+a_actor[5]  -1.19   0.99      -2.68       0.34  3447    1
+a_actor[6]  -0.25   0.99      -1.79       1.25  3361    1
+a_actor[7]   1.30   1.01      -0.21       2.89  3673    1
+a_block[1]  -0.19   0.23      -0.56       0.10  3825    1
+a_block[2]   0.04   0.19      -0.24       0.34  9346    1
+a_block[3]   0.06   0.19      -0.22       0.37  9202    1
+a_block[4]   0.00   0.18      -0.29       0.29 11314    1
+a_block[5]  -0.03   0.19      -0.33       0.25 10596    1
+a_block[6]   0.11   0.21      -0.16       0.45  6040    1
+a            0.47   0.97      -1.01       1.99  3273    1
+bp           0.83   0.26       0.40       1.24 13225    1
+bpc         -0.15   0.30      -0.61       0.36  8492    1
+sigma_actor  2.27   0.91       1.03       3.35  5677    1
+sigma_block  0.23   0.18       0.01       0.44  2269    1
+&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 16, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>

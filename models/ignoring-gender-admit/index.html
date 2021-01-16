@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Ignoring gender for admittance</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Ignoring gender for admittance</h1> </div> <div class=franklin-content > <p>This is model 13.4 from Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel="shortcut icon" type="image/png" href="/TuringModels.jl/assets/favicon.png"/> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Ignoring gender for admittance</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Ignoring gender for admittance</h1> </div> <div class=franklin-content > <p>This is model 13.4 from Statistical Rethinking Edition 1.</p> <div class=franklin-toc ><ol><li><a href="#data">Data</a><li><a href="#model">Model</a><li><a href="#output">Output</a><li><a href="#original_output">Original output</a></ol></div> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >import</span> CSV
 
 <span class=hljs-keyword >using</span> DataFrames
 <span class=hljs-keyword >using</span> Turing
@@ -50,27 +50,27 @@ Summary Statistics
   parameters      mean       std   naive_se      mcse         ess      rhat
       Symbol   Float64   Float64    Float64   Float64     Float64   Float64
 
-           a   -0.6375    0.6301     0.0089    0.0098   4846.5360    1.0000
-   a_dept[1]    0.5899    0.0694     0.0010    0.0008   6515.3478    1.0001
-   a_dept[2]    0.5370    0.0852     0.0012    0.0010   6762.2464    0.9998
-   a_dept[3]   -0.6163    0.0686     0.0010    0.0010   6028.5412    1.0000
-   a_dept[4]   -0.6645    0.0755     0.0011    0.0009   6610.4540    0.9999
-   a_dept[5]   -1.0887    0.0955     0.0014    0.0013   6525.5528    1.0000
-   a_dept[6]   -2.6562    0.1467     0.0021    0.0019   6266.4749    0.9998
-  sigma_dept    1.4490    0.5687     0.0080    0.0104   3673.8639    0.9999
+           a   -0.6677    0.6531     0.0092    0.0114   2895.1202    0.9999
+   a_dept[1]    0.5900    0.0690     0.0010    0.0008   7013.6813    0.9998
+   a_dept[2]    0.5383    0.0842     0.0012    0.0008   6967.6459    0.9999
+   a_dept[3]   -0.6161    0.0699     0.0010    0.0009   6656.0733    0.9998
+   a_dept[4]   -0.6654    0.0732     0.0010    0.0008   6794.9576    0.9999
+   a_dept[5]   -1.0893    0.0944     0.0013    0.0015   6391.6063    1.0004
+   a_dept[6]   -2.6526    0.1526     0.0022    0.0018   6445.7544    0.9998
+  sigma_dept    1.4623    0.5936     0.0084    0.0098   3003.7414    0.9999
 
 Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-           a   -1.8487   -1.0018   -0.6555   -0.2778    0.6477
-   a_dept[1]    0.4565    0.5429    0.5881    0.6382    0.7245
-   a_dept[2]    0.3701    0.4802    0.5371    0.5956    0.7044
-   a_dept[3]   -0.7515   -0.6617   -0.6168   -0.5689   -0.4818
-   a_dept[4]   -0.8134   -0.7159   -0.6641   -0.6139   -0.5155
-   a_dept[5]   -1.2743   -1.1528   -1.0878   -1.0241   -0.9031
-   a_dept[6]   -2.9513   -2.7527   -2.6535   -2.5522   -2.3813
-  sigma_dept    0.7666    1.0754    1.3253    1.6723    2.8219
+           a   -1.9610   -1.0320   -0.6634   -0.2949    0.6050
+   a_dept[1]    0.4551    0.5431    0.5877    0.6369    0.7247
+   a_dept[2]    0.3740    0.4805    0.5369    0.5951    0.7031
+   a_dept[3]   -0.7569   -0.6617   -0.6157   -0.5703   -0.4810
+   a_dept[4]   -0.8096   -0.7146   -0.6648   -0.6162   -0.5230
+   a_dept[5]   -1.2783   -1.1524   -1.0881   -1.0254   -0.9034
+   a_dept[6]   -2.9571   -2.7535   -2.6525   -2.5468   -2.3563
+  sigma_dept    0.7661    1.0761    1.3258    1.6737    2.9442
 </code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/ignoring-gender-admit/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m_13_4_rethinking = <span class=hljs-string >&quot;&quot;&quot;
@@ -98,4 +98,4 @@ Inference for Stan model: 0c5c36512c20c41995d1bd25be525138.
     a           6965    1
     sigma_dept  5643    1
     lp__        5322    1
-&quot;&quot;&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob J Goedman, Rik Huijzer and contributors. Last modified: January 12, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+&quot;&quot;&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 16, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>

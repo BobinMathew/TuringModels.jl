@@ -1,0 +1,75 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel="shortcut icon" type="image/png" href="/TuringModels.jl/assets/favicon.png"/> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Glimmer</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Glimmer</h1> </div> <div class=franklin-content > <p>In Statistical Rethinking Edition 1, McElreath shows that the R <code>glimmer</code> package introduces weakly regularizing priors by default. This can sometimes lead to nonsense estimates. To fix it, McElreath uses a very weakly informative prior in model <code>m.good</code>.</p> <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-comment ># outcome and predictor almost perfectly associated</span>
+x = repeat([-<span class=hljs-number >1</span>], <span class=hljs-number >9</span>); append!(x, repeat([<span class=hljs-number >1</span>],<span class=hljs-number >11</span>))
+y = repeat([<span class=hljs-number >0</span>], <span class=hljs-number >10</span>); append!(y, repeat([<span class=hljs-number >1</span>],<span class=hljs-number >10</span>))</code></pre><pre><code class="plaintext hljs">20-element Array{Int64,1}:
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1</code></pre> <h2 id=model ><a href="#model">Model</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Turing
+
+<span class=hljs-meta >@model</span> m_good_stan(x, y) = <span class=hljs-keyword >begin</span>
+    α ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
+    β ~ Normal(<span class=hljs-number >0</span>, <span class=hljs-number >10</span>)
+
+    logits = α .+ β * x
+
+    y .~ BinomialLogit.(<span class=hljs-number >1</span>, logits)
+<span class=hljs-keyword >end</span></code></pre><pre><code class="plaintext hljs">m_good_stan (generic function with 1 method)</code></pre>
+<h2 id=output ><a href="#output">Output</a></h2>
+<pre><code class="julia hljs">chains = sample(m_good_stan(x, y), NUTS(<span class=hljs-number >0.65</span>), <span class=hljs-number >1000</span>)</code></pre><pre><code class="plaintext hljs">Chains MCMC chain (1000×14×1 Array{Float64,3}):
+
+Iterations        = 1:1000
+Thinning interval = 1
+Chains            = 1
+Samples per chain = 1000
+parameters        = α, β
+internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
+
+Summary Statistics
+  parameters      mean       std   naive_se      mcse       ess      rhat
+      Symbol   Float64   Float64    Float64   Float64   Float64   Float64
+
+           α   -5.7635    4.1356     0.1308    0.3815   74.1630    1.0209
+           β    8.5574    4.2058     0.1330    0.3891   76.7862    1.0243
+
+Quantiles
+  parameters       2.5%     25.0%     50.0%     75.0%     97.5%
+      Symbol    Float64   Float64   Float64   Float64   Float64
+
+           α   -14.7412   -8.4122   -4.9543   -2.4828    0.0513
+           β     2.5910    5.2503    7.5907   11.1231   17.7200
+</code></pre>
+</p>
+
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
+
+StatsPlots.plot(chains)</code></pre>
+<p> <img src="/TuringModels.jl/assets/models/glimmer/code/output/chains.svg" alt="">
+<h2 id=original_output ><a href="#original_output">Original output</a></h2>
+<pre><code class="julia hljs">m_10_x,_results = <span class=hljs-string >&quot;
+    mean   sd   5.5% 94.5% n_eff Rhat
+ a -5.09 4.08 -12.62 -0.25   100 1.00
+ b  7.86 4.09   2.96 15.75   104 1.01
+&quot;</span>;</code></pre>
+
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 16, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>

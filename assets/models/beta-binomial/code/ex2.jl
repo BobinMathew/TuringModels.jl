@@ -15,6 +15,6 @@ using Turing
   alpha = prob * θ
   beta = (1 - prob) * θ
   admit .~ BetaBinomial.(applications, alpha, beta)
-end;
+end
 
-model = m11_5(df.admit, df.applications)
+model = m11_5(df.admit, df.applications);

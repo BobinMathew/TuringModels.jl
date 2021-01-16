@@ -1,0 +1,1 @@
+m_good_stan (generic function with 1 method)

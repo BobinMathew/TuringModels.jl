@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Admit or reject</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Admit or reject</h1> </div> <div class=franklin-content > <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel="shortcut icon" type="image/png" href="/TuringModels.jl/assets/favicon.png"/> <link rel=stylesheet  href="/TuringModels.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/TuringModels.jl/css/franklin.css"> <title>Admit or reject</title> <div class=franklin-content > <div class=top-bar > <a href="/TuringModels.jl/">TuringModels</a> </div> <h1>Admit or reject</h1> </div> <div class=franklin-content > <h2 id=data ><a href="#data">Data</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
 <span class=hljs-keyword >using</span> DataFrames
 <span class=hljs-keyword >using</span> StatsFuns
 <span class=hljs-keyword >using</span> Turing
@@ -44,19 +44,19 @@ Summary Statistics
   parameters      mean       std   naive_se      mcse         ess      rhat
       Symbol   Float64   Float64    Float64   Float64     Float64   Float64
 
-          α₁    4.9841    0.0247     0.0008    0.0006   1012.2874    1.0010
-          α₂    5.4419    0.0186     0.0006    0.0005   1170.0913    1.0009
+          α₁    4.9843    0.0241     0.0008    0.0008   1018.7571    0.9992
+          α₂    5.4417    0.0186     0.0006    0.0004    947.0690    0.9998
 
 Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-          α₁    4.9364    4.9672    4.9836    5.0017    5.0318
-          α₂    5.4041    5.4301    5.4422    5.4544    5.4799
+          α₁    4.9366    4.9687    4.9835    4.9996    5.0325
+          α₂    5.4043    5.4295    5.4407    5.4549    5.4771
 </code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/admit-reject/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs">m_10_yyt_result = <span class=hljs-string >&quot;
     mean   sd 5.5% 94.5% n_eff Rhat
  a1 4.99 0.02 4.95  5.02  2201    1
  a2 5.44 0.02 5.41  5.47  2468    1
-&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob J Goedman, Rik Huijzer and contributors. Last modified: January 12, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > &copy; Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 16, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>

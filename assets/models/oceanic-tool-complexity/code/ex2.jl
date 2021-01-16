@@ -1,8 +1,6 @@
 # This file was generated, do not modify it. # hide
 using Turing
 
-# This is supposed to be a "bad" model since we take non-centered data for the
-# predictor log_pop
 @model m10_10stan(total_tools, log_pop, contact_high) = begin
     α ~ Normal(0, 100)
     βp ~ Normal(0, 1)
