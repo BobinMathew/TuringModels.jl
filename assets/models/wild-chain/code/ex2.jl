@@ -6,4 +6,4 @@ using Turing
     α ~ Flat() ## improper prior with pobability one everywhere
 
     y .~ Normal(α, σ)
-end
+end;

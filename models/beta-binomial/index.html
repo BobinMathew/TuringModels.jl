@@ -47,22 +47,22 @@ parameters        = α, θ
 internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
 Summary Statistics
-  parameters      mean       std   naive_se      mcse         ess      rhat
-      Symbol   Float64   Float64    Float64   Float64     Float64   Float64
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           α   -0.3892    0.2969     0.0094    0.0086    755.9499    0.9998
-           θ    2.7763    1.0021     0.0317    0.0202   1006.2894    0.9997
+           α   -0.3704    0.3072     0.0097    0.0118   888.2492    0.9990
+           θ    2.7984    0.9845     0.0311    0.0367   825.3917    0.9996
 
 Quantiles
   parameters      2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol   Float64   Float64   Float64   Float64   Float64
 
-           α   -0.9866   -0.5846   -0.3949   -0.1971    0.2249
-           θ    1.1776    2.0604    2.6555    3.3398    5.1212
+           α   -0.9647   -0.5585   -0.3665   -0.1740    0.2300
+           θ    1.3275    2.0737    2.6156    3.3898    4.9403
 </code></pre> </p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsPlots
 
 StatsPlots.plot(chains)</code></pre> <p> <img src="/TuringModels.jl/assets/models/beta-binomial/code/output/chains.svg" alt=""> <h2 id=original_output ><a href="#original_output">Original output</a></h2> <pre><code class="julia hljs"><span class=hljs-string >&quot;&quot;&quot;
         mean   sd  5.5% 94.5% n_eff Rhat
 theta   2.74 0.96  1.43  4.37  3583    1
 a       -0.37 0.31 -0.87  0.12  3210    1
-&quot;&quot;&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 19, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+&quot;&quot;&quot;</span>;</code></pre> <div class=page-foot > <div class=copyright > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Rob Goedman, Richard Torkar, Rik Huijzer, Martin Trapp and contributors. Last modified: January 25, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>

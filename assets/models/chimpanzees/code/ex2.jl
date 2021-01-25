@@ -10,4 +10,3 @@ using Turing
     logits = α .+ (βp .+ βpC * x₁) .* x₂
     y .~ BinomialLogit.(1, logits)
 end
-model = m10_3(df.pulled_left, df.condition, df.prosoc_left)

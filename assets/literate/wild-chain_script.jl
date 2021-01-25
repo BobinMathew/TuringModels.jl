@@ -9,7 +9,7 @@ using Turing
     α ~ Flat() ## improper prior with pobability one everywhere
 
     y .~ Normal(α, σ)
-end
+end;
 
 chains = sample(m8_2(y), NUTS(0.65), 1000)
 
