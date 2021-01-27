@@ -8,15 +8,15 @@ parameters        = α, β
 internals         = acceptance_rate, hamiltonian_energy, hamiltonian_energy_error, is_accept, log_density, lp, max_hamiltonian_energy_error, n_steps, nom_step_size, numerical_error, step_size, tree_depth
 
 Summary Statistics
-  parameters      mean       std   naive_se      mcse       ess      rhat
-      Symbol   Float64   Float64    Float64   Float64   Float64   Float64
+  parameters      mean       std   naive_se      mcse        ess      rhat
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64
 
-           α   -5.3832    3.6493     0.1154    0.4321   67.6039    1.0017
-           β    8.2023    3.6683     0.1160    0.4199   74.2025    1.0001
+           α   -5.5582    4.3517     0.1376    0.3114   141.3018    1.0003
+           β    8.3987    4.3832     0.1386    0.3188   135.0060    1.0007
 
 Quantiles
   parameters       2.5%     25.0%     50.0%     75.0%     97.5%
       Symbol    Float64   Float64   Float64   Float64   Float64
 
-           α   -13.5560   -7.7969   -4.8969   -2.6580    0.4153
-           β     2.6111    5.4152    7.6539   10.5169   16.2743
+           α   -16.5313   -8.1002   -4.7498   -2.1916    0.4639
+           β     2.4677    4.9548    7.4289   11.0062   19.5567

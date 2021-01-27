@@ -6,9 +6,6 @@ We define a simple Gaussian model with unknown mean and variance.
 ## Model
 
 ```julia:ex1
-import CSV
-
-using StatsPlots
 using Turing
 
 @model function gdemo(x, y)

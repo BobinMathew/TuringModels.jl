@@ -1,7 +1,4 @@
 # This file was generated, do not modify it. # hide
-import CSV
-
-using StatsPlots
 using Turing
 
 @model function gdemo(x, y)
